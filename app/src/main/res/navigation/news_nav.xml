@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/news_nav"
+    app:startDestination="@id/newsHeadlinesFragment">
+
+    <fragment
+        android:id="@+id/newsHeadlinesFragment"
+        android:name="com.assignment.newsbreeze.ui.fragment.NewsHeadlinesFragment"
+        android:label="@string/headlines"
+        tools:layout="@layout/news_headlines_fragment" >
+        <action
+            android:id="@+id/action_headlines_to_article"
+            app:destination="@id/newsArticleFragment">
+
+            <argument
+                android:name="newsArticle"
+                app:argType="com.assignment.newsbreeze.models.Article" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/newsArticleFragment"
+        android:name="com.assignment.newsbreeze.ui.fragment.NewsArticleFragment"
+        android:label="@string/article"
+        tools:layout="@layout/fragment_news_article" >
+
+        <action
+            android:id="@+id/action_article_to_headlines"
+            app:destination="@id/newsHeadlinesFragment" />
+    </fragment>
+</navigation>

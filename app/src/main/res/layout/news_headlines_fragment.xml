@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import
+            type="com.assignment.newsbreeze.models.Article" />
+
+        <variable
+            name="article"
+            type="Article" />
+        <variable
+            name="viewModel"
+            type="com.assignment.newsbreeze.viewmodel.NewsViewModel" />
+    </data>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.assignment.newsbreeze.ui.fragment.NewsHeadlinesFragment">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:onClick='@{(view) -> viewModel.openNewsArticle("New android article")}'
+            android:text="@string/headlines" />
+
+    </FrameLayout>
+</layout>
