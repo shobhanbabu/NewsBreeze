@@ -16,17 +16,12 @@
 
             <argument
                 android:name="newsArticle"
-                app:argType="com.assignment.newsbreeze.models.Article" />
+                app:argType="com.assignment.newsbreeze.data.models.Article" />
         </action>
     </fragment>
     <fragment
         android:id="@+id/newsArticleFragment"
         android:name="com.assignment.newsbreeze.ui.fragment.NewsArticleFragment"
         android:label="@string/article"
-        tools:layout="@layout/fragment_news_article" >
-
-        <action
-            android:id="@+id/action_article_to_headlines"
-            app:destination="@id/newsHeadlinesFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_news_article" />
 </navigation>

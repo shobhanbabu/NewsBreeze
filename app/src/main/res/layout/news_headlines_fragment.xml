@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
     <data>
-        <import
-            type="com.assignment.newsbreeze.models.Article" />
-
         <variable
             name="article"
-            type="Article" />
+            type="com.assignment.newsbreeze.data.models.Article" />
         <variable
             name="viewModel"
             type="com.assignment.newsbreeze.viewmodel.NewsViewModel" />
@@ -15,14 +12,26 @@
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_height="match_parent"
+        android:background="@color/light_gray"
         tools:context="com.assignment.newsbreeze.ui.fragment.NewsHeadlinesFragment">
 
-        <TextView
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/headlinesList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:onClick='@{(view) -> viewModel.openNewsArticle("New android article")}'
-            android:text="@string/headlines" />
+            android:clipToPadding="false"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
+            tools:listitem="@layout/headline_list_item_layout" />
+
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:visibility="gone" />
 
     </FrameLayout>
 </layout>

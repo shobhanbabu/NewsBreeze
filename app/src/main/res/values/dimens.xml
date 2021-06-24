@@ -1,3 +1,8 @@
 <resources>
     <dimen name="text_margin">16dp</dimen>
+    <dimen name="_16dp">16dp</dimen>
+    <dimen name="_12dp">12dp</dimen>
+    <dimen name="_8dp">8dp</dimen>
+    <dimen name="_240dp">240dp</dimen>
+    <dimen name="_360dp">360dp</dimen>
 </resources>
