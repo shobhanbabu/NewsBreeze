@@ -1,5 +1,6 @@
 package com.assignment.newsbreeze.ui.fragment
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,6 +17,7 @@ class NewsArticleFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentNewsArticleBinding.inflate(layoutInflater)
+        binding.activity = context as Activity?
         return binding.root
     }
 

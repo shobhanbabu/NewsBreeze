@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 interface IRepository {
 
     val remoteDataSource: IRemoteDataSource
-
+//    val headlinesDBDao: HeadlinesDBDao
     /**
      * Makes the popular photos API call via data source. In an offline-first architecture, it is at this function
      * call that the Repository class would check if the data exists in a Room

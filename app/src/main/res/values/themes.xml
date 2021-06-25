@@ -14,13 +14,42 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Widget.AppCompat.TextView.DarkWhite" parent="Widget.AppCompat.TextView">
-        <item name="android:textColor">@color/dark_white</item>
-        <item name="font">@font/roboto_slab_light</item>
+    <style name="Widget.AppCompat.TextView.ToolbarHeader" parent="Widget.AppCompat.TextView">
+        <item name="font">@font/roboto_slab_semi_bold</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/_20sp</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="Widget.AppCompat.TextView.DarkerWhite" parent="Widget.AppCompat.TextView">
-        <item name="android:textColor">@color/darker_white</item>
+    <style name="Widget.AppCompat.TextView.HeadlineItemHeader" parent="Widget.AppCompat.TextView">
         <item name="font">@font/roboto_slab_light</item>
+        <item name="android:textSize">@dimen/_20sp</item>
+        <item name="android:textColor">@color/dark_white</item>
     </style>
+
+    <style name="Widget.AppCompat.TextView.HeadlineItemFooter" parent="Widget.AppCompat.TextView">
+        <item name="font">@font/roboto_slab_light</item>
+        <item name="android:textSize">@dimen/_12sp</item>
+        <item name="android:textColor">@color/darker_white</item>
+    </style>
+
+    <style name="Widget.AppCompat.TextView.HeadlineDetailHeader" parent="Widget.AppCompat.TextView">
+        <item name="font">@font/roboto_slab_light</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/_29sp</item>
+        <item name="android:textColor">@color/dark_white</item>
+    </style>
+
+    <style name="Widget.AppCompat.TextView.HeadlineDetailSource" parent="Widget.AppCompat.TextView">
+        <item name="font">@font/roboto_slab_light</item>
+        <item name="android:textSize">@dimen/_20sp</item>
+        <item name="android:textColor">@color/dark_white</item>
+    </style>
+
+    <style name="Widget.AppCompat.TextView.HeadlineDetailDesc" parent="Widget.AppCompat.TextView">
+        <item name="font">@font/roboto_slab_light</item>
+        <item name="android:textSize">@dimen/_14sp</item>
+        <item name="android:textColor">@color/darker_white</item>
+    </style>
+
 </resources>

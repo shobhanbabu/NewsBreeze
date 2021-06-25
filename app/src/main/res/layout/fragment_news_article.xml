@@ -5,79 +5,98 @@
 
     <data>
         <variable
+            name="activity"
+            type="android.app.Activity" />
+
+        <variable
             name="article"
             type="com.assignment.newsbreeze.data.models.Article" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/light_gray"
         tools:context="com.assignment.newsbreeze.ui.fragment.NewsArticleFragment">
 
+        <ImageView
+            android:id="@+id/headlineImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            app:imageUrl="@{article.urlToImage}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/image_place_holder" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/black_white_gradient"
-            android:padding="@dimen/_8dp"
+            android:background="@drawable/black_white_light_gradient"
+            android:padding="@dimen/_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent">
 
-            <ImageView
-                android:id="@+id/headlineImage"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_360dp"
-                app:imageUrl="@{article.urlToImage}"
-                app:layout_constraintBottom_toBottomOf="parent"
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_transparent_bg"
+                android:padding="@dimen/_8dp"
+                android:onClick="@{()->activity.onBackPressed()}"
+                android:src="@drawable/ic_arrow_back"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/title"
-                style="@style/Widget.AppCompat.TextView.DarkWhite"
+                style="@style/Widget.AppCompat.TextView.HeadlineDetailHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_64dp"
                 android:text="@{article.title}"
-                android:textSize="@dimen/_16dp"
                 app:layout_constraintBottom_toTopOf="@id/source_name"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/headlineImage" />
+                tools:text="Boeing dedicates $100 million to victims of 737 Max crashes" />
 
             <TextView
                 android:id="@+id/source_name"
-                style="@style/Widget.AppCompat.TextView.DarkerWhite"
+                style="@style/Widget.AppCompat.TextView.HeadlineDetailSource"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_16dp"
                 android:text="@{article.source.name}"
                 app:layout_constraintBottom_toTopOf="@id/description"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="CNN" />
 
             <TextView
                 android:id="@+id/publishedAt"
-                style="@style/Widget.AppCompat.TextView.DarkerWhite"
+                style="@style/Widget.AppCompat.TextView.HeadlineDetailSource"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_16dp"
+                android:layout_marginBottom="@dimen/_16dp"
                 android:text='@{article.publishedAt.split("T")[0]}'
                 app:layout_constraintBottom_toTopOf="@id/description"
-                app:layout_constraintLeft_toRightOf="@id/source_name"
-                app:layout_constraintStart_toEndOf="@id/source_name" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                tools:text="2019-07-03" />
 
             <TextView
                 android:id="@+id/description"
-                style="@style/Widget.AppCompat.TextView.DarkerWhite"
+                style="@style/Widget.AppCompat.TextView.HeadlineDetailDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_16dp"
+                tools:text="Boeing dedicates $100 million to victims of 737 Max crashes Boeing dedicates $100 million to victims of 737 Max crashes"
                 android:text="@{article.description}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+    </FrameLayout>
 </layout>

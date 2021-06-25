@@ -17,7 +17,8 @@ import kotlinx.coroutines.launch
  * of the applicable interface in order to implement the business logic.
  */
 class NewsViewModel @ViewModelInject constructor(
-    private val headlineUseCase: HeadlineUseCase
+    private val headlineUseCase: HeadlineUseCase/*,
+    private val localDataSource: LocalDataSource*/
 ) : ViewModel() {
     val newsHeadlinesState: MutableLiveData<ViewState<List<Article>>> by lazy {
         MutableLiveData<ViewState<List<Article>>>()
@@ -31,19 +32,9 @@ class NewsViewModel @ViewModelInject constructor(
             }.collect {
                 when (it) {
                     is ViewState.Loading -> newsHeadlinesState.value = it
-                    is ViewState.RenderFailure -> {
-                        newsHeadlinesState.value = it
-//                        localDataService.getHeadlines().collect { result ->
-//                            newsHeadlinesState.value = when (result) {
-//                                is IOTaskResult.OnSuccess -> ViewState.RenderSuccess(result.data.articles)
-//                                is IOTaskResult.OnFailed -> ViewState.RenderFailure(it.throwable)
-//                            }
-//                        }
-                    }
-                    is ViewState.RenderSuccess<NewsHeadlinesResponse> -> {
-//                        localDataService.cacheHeadlines(it.output)
+                    is ViewState.RenderFailure -> newsHeadlinesState.value = it
+                    is ViewState.RenderSuccess<NewsHeadlinesResponse> ->
                         newsHeadlinesState.value = ViewState.RenderSuccess(it.output.articles)
-                    }
                 }
             }
         }

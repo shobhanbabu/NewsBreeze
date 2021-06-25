@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-
     <data>
-
         <variable
             name="article"
             type="com.assignment.newsbreeze.data.models.Article" />
@@ -10,8 +8,9 @@
 
     <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_260dp"
         android:layout_marginLeft="@dimen/_16dp"
         android:layout_marginTop="@dimen/_12dp"
         android:layout_marginRight="@dimen/_16dp"
@@ -20,63 +19,60 @@
         app:cardCornerRadius="@dimen/_12dp"
         app:cardUseCompatPadding="true">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/headlineImage"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/_240dp"
+                android:layout_height="match_parent"
+                android:scaleType="center"
                 app:imageUrl="@{article.urlToImage}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                tools:src="@drawable/image_place_holder" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:background="@drawable/black_white_gradient"
-                android:padding="@dimen/_8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintStart_toStartOf="parent">
+                android:padding="@dimen/_12dp">
 
                 <TextView
                     android:id="@+id/title"
-                    style="@style/Widget.AppCompat.TextView.DarkWhite"
+                    style="@style/Widget.AppCompat.TextView.HeadlineItemHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@{article.title}"
-                    android:textSize="@dimen/_16dp"
                     app:layout_constraintBottom_toTopOf="@id/source_name"
+                    android:layout_marginBottom="@dimen/_16dp"
                     app:layout_constraintLeft_toLeftOf="parent"
+                    tools:text="Boeing dedicates $100 million to victims of 737 Max crashes"
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <TextView
                     android:id="@+id/source_name"
-                    style="@style/Widget.AppCompat.TextView.DarkerWhite"
+                    style="@style/Widget.AppCompat.TextView.HeadlineItemFooter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{article.source.name}"
+                    tools:text="CNN"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <TextView
                     android:id="@+id/publishedAt"
-                    style="@style/Widget.AppCompat.TextView.DarkerWhite"
+                    style="@style/Widget.AppCompat.TextView.HeadlineItemFooter"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_16dp"
+                    android:layout_height="wrap_content"
                     android:text='@{article.publishedAt.split("T")[0]}'
+                    tools:text="2019-07-03"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/source_name"
                     app:layout_constraintStart_toEndOf="@id/source_name" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

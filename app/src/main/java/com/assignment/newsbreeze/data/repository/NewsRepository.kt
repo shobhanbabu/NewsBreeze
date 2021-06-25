@@ -16,11 +16,25 @@ import javax.inject.Singleton
  */
 @Singleton
 class NewsRepository @Inject constructor(
-    override val remoteDataSource: IRemoteDataSource
-    ) :
+    override val remoteDataSource: IRemoteDataSource/*,
+    override val headlinesDBDao: HeadlinesDBDao*/
+) :
     IRepository {
 
     @ExperimentalCoroutinesApi
     override suspend fun getHeadlines(): Flow<IOTaskResult<NewsHeadlinesResponse>> =
-        remoteDataSource.getHeadlines()
+        remoteDataSource
+            .getHeadlines()
+//            .map {
+//                when (it) {
+//                    is IOTaskResult.OnFailed -> {
+//                        val res = headlinesDBDao.getAllHeadlines()
+//                        IOTaskResult.OnSuccess(NewsHeadlinesResponse("Cached", res.size, res))
+//                    }
+//                    is IOTaskResult.OnSuccess -> {
+//                        headlinesDBDao.insertAll(it.data.articles)
+//                        it
+//                    }
+//                }
+//            }
 }

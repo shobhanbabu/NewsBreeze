@@ -1,17 +1,17 @@
 package com.assignment.newsbreeze.di
 
 import android.content.Context
-import android.content.SharedPreferences
+import androidx.room.Room
+import com.assignment.byjusnews.data.local.HeadlinesDB
+import com.assignment.byjusnews.data.local.HeadlinesDBDao
 import com.assignment.newsbreeze.BuildConfig
 import com.assignment.newsbreeze.contract.*
-import com.assignment.newsbreeze.data.local.LocalDataService
 import com.assignment.newsbreeze.data.local.LocalDataSource
 import com.assignment.newsbreeze.data.network.NetworkDataSource
-import com.assignment.newsbreeze.data.repository.NewsRepository
 import com.assignment.newsbreeze.data.network.NewsApi
 import com.assignment.newsbreeze.data.network.RetrofitNewsWebService
+import com.assignment.newsbreeze.data.repository.NewsRepository
 import com.assignment.newsbreeze.usecase.HeadlineUseCase
-
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,7 +21,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
 
 /**
  * Hilt Module class that builds our dependency graph
@@ -36,7 +35,8 @@ object NewsHiltDIModule {
     @Provides
     fun provideLoggingInterceptor() = HttpLoggingInterceptor().apply {
         level =
-            if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+            if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY
+            else HttpLoggingInterceptor.Level.NONE
     }
 
     /**
@@ -92,34 +92,34 @@ object NewsHiltDIModule {
         NetworkDataSource(webService)
 
     /**
-     * Returns a [ILocalService] impl
-     * @param sharedPreferences [SharedPreferences] retrofit interface
-     */
-    @Provides
-    fun providesLocalDataService(sharedPreferences: SharedPreferences): ILocalService =
-        LocalDataService(sharedPreferences)
-
-    /**
      * Returns a [ILocalDataSource] impl
      * @param localService [ILocalService] instance
      */
-    @Singleton
     @Provides
     fun providesLocalDataSource(localService: ILocalService): ILocalDataSource =
         LocalDataSource(localService)
 
     @Provides
-    fun provideSharedPreferences(@ApplicationContext context: Context): SharedPreferences =
-        context.getSharedPreferences("Constants.PREF_NAME", Context.MODE_PRIVATE)
+    fun provideHeadlinesDao(appDatabase: HeadlinesDB): HeadlinesDBDao {
+        return appDatabase.headlinesDao()
+    }
+
+    @Provides
+    fun provideHeadlinesDB(@ApplicationContext context: Context): HeadlinesDB =
+        Room.databaseBuilder(
+            context,
+            HeadlinesDB::class.java, "byjus-headlines.db"
+        ).build()
 
     /**
      * Returns a singleton [IRepository] implementation
      * @param remoteDataSource [IRemoteDataSource] implementation
      */
     @Provides
-    fun provideRepository(remoteDataSource: IRemoteDataSource
+    fun provideRepository(
+        remoteDataSource: IRemoteDataSource/*, headlinesDBDao: HeadlinesDBDao*/
     ): IRepository =
-        NewsRepository(remoteDataSource)
+        NewsRepository(remoteDataSource/*, headlinesDBDao*/)
 
 
     /**

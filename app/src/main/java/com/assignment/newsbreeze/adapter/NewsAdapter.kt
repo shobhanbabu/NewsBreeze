@@ -18,7 +18,7 @@ class NewsAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsHeadlineViewHolder =
-        NewsHeadlineViewHolder(HeadlineListItemLayoutBinding.inflate(LayoutInflater.from(parent.context)))
+        NewsHeadlineViewHolder(HeadlineListItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
     override fun onBindViewHolder(holder: NewsHeadlineViewHolder, position: Int) {
         val article = itemList[position]
