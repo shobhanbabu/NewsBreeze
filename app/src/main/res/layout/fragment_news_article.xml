@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="activity"
             type="android.app.Activity" />
@@ -23,7 +24,7 @@
             android:id="@+id/headlineImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="fitXY"
+            android:scaleType="centerCrop"
             app:imageUrl="@{article.urlToImage}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -31,72 +32,87 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/image_place_holder" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/black_white_light_gradient"
-            android:padding="@dimen/_24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom">
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/btn_transparent_bg"
-                android:padding="@dimen/_8dp"
-                android:onClick="@{()->activity.onBackPressed()}"
-                android:src="@drawable/ic_arrow_back"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/title"
-                style="@style/Widget.AppCompat.TextView.HeadlineDetailHeader"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_64dp"
-                android:text="@{article.title}"
-                app:layout_constraintBottom_toTopOf="@id/source_name"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:text="Boeing dedicates $100 million to victims of 737 Max crashes" />
-
-            <TextView
-                android:id="@+id/source_name"
-                style="@style/Widget.AppCompat.TextView.HeadlineDetailSource"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_16dp"
-                android:text="@{article.source.name}"
-                app:layout_constraintBottom_toTopOf="@id/description"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:text="CNN" />
-
-            <TextView
-                android:id="@+id/publishedAt"
-                style="@style/Widget.AppCompat.TextView.HeadlineDetailSource"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/_16dp"
-                android:text='@{article.publishedAt.split("T")[0]}'
-                app:layout_constraintBottom_toTopOf="@id/description"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                tools:text="2019-07-03" />
-
-            <TextView
-                android:id="@+id/description"
-                style="@style/Widget.AppCompat.TextView.HeadlineDetailDesc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Boeing dedicates $100 million to victims of 737 Max crashes Boeing dedicates $100 million to victims of 737 Max crashes"
-                android:text="@{article.description}"
+                android:background="@drawable/black_white_light_gradient"
+                android:padding="@dimen/_24dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintRight_toRightOf="parent">
+
+                <TextView
+                    android:id="@+id/title"
+                    style="@style/DetailHeadlineItemHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_26dp"
+                    android:text="@{article.title}"
+                    app:layout_constraintBottom_toTopOf="@id/source_name"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="Boeing dedicates $100 million to victims of 737 Max crashes" />
+
+                <TextView
+                    android:id="@+id/source_name"
+                    style="@style/DetailHeadlineItemDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_16dp"
+                    android:text="@{article.source.name}"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/title"
+                    tools:text="CNN" />
+
+                <TextView
+                    android:id="@+id/publishedAt"
+                    style="@style/DetailHeadlineItemDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text='@{article.publishedAt.split("T")[0]}'
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/source_name"
+                    tools:text="2019-07-03" />
+
+                <Button
+                    android:id="@+id/save"
+                    style="@style/HeadlineItemButtonText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/save"
+                    app:layout_constraintBottom_toBottomOf="@+id/publishedAt"
+                    app:layout_constraintEnd_toEndOf="@+id/title"
+                    app:layout_constraintTop_toTopOf="@+id/source_name" />
+
+                <TextView
+                    android:id="@+id/description"
+                    style="@style/DetailHeadlineItemDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16dp"
+                    android:text="@{article.description}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/publishedAt"
+                    tools:text="Boeing dedicates $100 million to victims of 737 Max crashes Boeing dedicates $100 million to victims of 737 Max crashes" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <ImageButton
+            android:layout_width="@dimen/_42dp"
+            android:layout_height="@dimen/_42dp"
+            android:layout_marginLeft="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:background="@drawable/btn_transparent_bg"
+            android:onClick="@{()->activity.onBackPressed()}"
+            android:src="@drawable/ic_arrow_back" />
     </FrameLayout>
 </layout>

@@ -1,33 +1,32 @@
 package com.assignment.newsbreeze.data.local
 
-import android.content.SharedPreferences
 import com.assignment.newsbreeze.contract.ILocalService
+import com.assignment.newsbreeze.data.models.Article
 import com.assignment.newsbreeze.data.models.NewsHeadlinesResponse
+import com.assignment.newsbreeze.data.models.transform
 import com.assignment.newsbreeze.utils.IOTaskResult
-import com.google.gson.Gson
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import java.lang.RuntimeException
 import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * [ILocalService] impl class which uses shared preferences to provide the app with the functionality to
+ * [ILocalService] impl class which uses Room DB to provide the app with the functionality to
  * store recently fetched headlines
  */
 @Singleton
-class LocalDataService @Inject constructor(private val sharedPreferences: SharedPreferences) :
+class LocalDataService @Inject constructor(private val headlinesDBDao: HeadlinesDBDao) :
     ILocalService {
-
-    private val headlinesKey = "Headlines_key"
 
     @ExperimentalCoroutinesApi
     override suspend fun getHeadlines(): Flow<IOTaskResult<NewsHeadlinesResponse>> =
         flow {
-            val cachedData = sharedPreferences.getString(headlinesKey, null)
+            val cachedData = headlinesDBDao.getAllHeadlines().map {
+                it.transform()
+            }
             if (!cachedData.isNullOrEmpty()) {
-                val fromJson = Gson().fromJson(cachedData, NewsHeadlinesResponse::class.java)
+                val fromJson = NewsHeadlinesResponse("", cachedData.size, cachedData)
                 emit(
                     IOTaskResult.OnSuccess<NewsHeadlinesResponse>(fromJson)
                 )
@@ -39,6 +38,14 @@ class LocalDataService @Inject constructor(private val sharedPreferences: Shared
         }
 
     override suspend fun cacheHeadlines(headlinesResponse: NewsHeadlinesResponse) {
-        sharedPreferences.edit().putString(headlinesKey, Gson().toJson(headlinesResponse)).commit()
+        headlinesDBDao.insertAll(headlinesResponse.articles.map { it.transform() })
+    }
+
+    override suspend fun saveArticle(article: Article) {
+        headlinesDBDao.insert(article.transform())
+    }
+
+    override suspend fun deleteArticle(article: Article) {
+        headlinesDBDao.delete(article.transform())
     }
 }

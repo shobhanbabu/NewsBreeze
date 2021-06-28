@@ -1,5 +1,6 @@
 package com.assignment.newsbreeze.contract
 
+import com.assignment.newsbreeze.data.models.Article
 import com.assignment.newsbreeze.data.models.NewsHeadlinesResponse
 import com.assignment.newsbreeze.utils.IOTaskResult
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,4 +28,18 @@ interface ILocalDataSource {
      */
     @ExperimentalCoroutinesApi
     suspend fun cacheHeadlines(headlinesResponse: NewsHeadlinesResponse)
+
+    /**
+     * Caches the Article
+     * [Article] type
+     */
+    @ExperimentalCoroutinesApi
+    suspend fun saveArticle(article: Article)
+
+    /**
+     * Caches the Article
+     * [Article] type
+     */
+    @ExperimentalCoroutinesApi
+    suspend fun deleteArticle(article: Article)
 }

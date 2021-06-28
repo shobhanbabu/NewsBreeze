@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="article"
+            type="com.assignment.newsbreeze.data.models.Article" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16dp"
+        android:layout_marginBottom="@dimen/_16dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/img_container"
+            android:layout_width="@dimen/_100dp"
+            android:layout_height="@dimen/_100dp"
+            app:cardCornerRadius="@dimen/_12dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/headlineImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="center"
+                app:imageUrl="@{article.urlToImage}"
+                tools:src="@drawable/image_place_holder" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/source_name"
+            style="@style/HeadlineItemDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8dp"
+            android:text="@{article.source.name}"
+            app:layout_constraintStart_toEndOf="@+id/img_container"
+            app:layout_constraintTop_toTopOf="@+id/img_container"
+            tools:text="CNN" />
+
+        <TextView
+            android:id="@+id/publishedAt"
+            style="@style/HeadlineItemDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:text='@{article.publishedAt.split("T")[0]}'
+            app:layout_constraintLeft_toRightOf="@id/source_name"
+            app:layout_constraintStart_toEndOf="@id/source_name"
+            app:layout_constraintTop_toTopOf="@+id/source_name"
+            tools:text="2019-07-03" />
+        <TextView
+            android:id="@+id/title"
+            style="@style/HeadlineItemHeader"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8dp"
+            android:text="@{article.title}"
+            app:layout_constraintBottom_toBottomOf="@+id/img_container"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/img_container"
+            app:layout_constraintTop_toBottomOf="@+id/source_name"
+            tools:text="Boeing dedicates $100 million to victims of 737 Max crashes" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

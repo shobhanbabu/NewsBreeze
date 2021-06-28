@@ -4,6 +4,7 @@ import com.assignment.newsbreeze.contract.ILocalDataSource
 import com.assignment.newsbreeze.contract.ILocalService
 import com.assignment.newsbreeze.contract.IRemoteDataSource
 import com.assignment.newsbreeze.contract.IWebService
+import com.assignment.newsbreeze.data.models.Article
 import com.assignment.newsbreeze.data.models.NewsHeadlinesResponse
 import com.assignment.newsbreeze.utils.IOTaskResult
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -27,5 +28,15 @@ class LocalDataSource @Inject constructor(override val localService: ILocalServi
     @ExperimentalCoroutinesApi
     override suspend fun cacheHeadlines(headlinesResponse: NewsHeadlinesResponse) {
         localService.cacheHeadlines(headlinesResponse)
+    }
+
+    @ExperimentalCoroutinesApi
+    override suspend fun saveArticle(article: Article) {
+        localService.saveArticle(article)
+    }
+
+    @ExperimentalCoroutinesApi
+    override suspend fun deleteArticle(article: Article) {
+        localService.deleteArticle(article)
     }
 }

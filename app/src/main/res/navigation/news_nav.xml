@@ -9,7 +9,7 @@
         android:id="@+id/newsHeadlinesFragment"
         android:name="com.assignment.newsbreeze.ui.fragment.NewsHeadlinesFragment"
         android:label="@string/headlines"
-        tools:layout="@layout/news_headlines_fragment" >
+        tools:layout="@layout/news_headlines_fragment">
         <action
             android:id="@+id/action_headlines_to_article"
             app:destination="@id/newsArticleFragment">
@@ -18,10 +18,32 @@
                 android:name="newsArticle"
                 app:argType="com.assignment.newsbreeze.data.models.Article" />
         </action>
+        <action
+            android:id="@+id/action_headline_to_savedArticles"
+            app:destination="@id/savedArticlesFragment" />
     </fragment>
     <fragment
         android:id="@+id/newsArticleFragment"
         android:name="com.assignment.newsbreeze.ui.fragment.NewsArticleFragment"
         android:label="@string/article"
-        tools:layout="@layout/fragment_news_article" />
+        tools:layout="@layout/fragment_news_article">
+        <argument
+            android:name="newsArticle"
+            app:argType="com.assignment.newsbreeze.data.models.Article" />
+    </fragment>
+    <fragment
+        android:id="@+id/savedArticlesFragment"
+        android:name="com.assignment.newsbreeze.ui.fragment.SavedArticlesFragment"
+        android:label="fragment_saved_articles"
+        tools:layout="@layout/fragment_saved_articles">
+        <action
+            android:id="@+id/action_saved_articles_to_article"
+            app:popUpTo="@id/newsHeadlinesFragment"
+            app:destination="@id/newsArticleFragment">
+
+            <argument
+                android:name="newsArticle"
+                app:argType="com.assignment.newsbreeze.data.models.Article" />
+        </action>
+    </fragment>
 </navigation>

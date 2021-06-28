@@ -2,10 +2,11 @@ package com.assignment.newsbreeze.di
 
 import android.content.Context
 import androidx.room.Room
-import com.assignment.byjusnews.data.local.HeadlinesDB
-import com.assignment.byjusnews.data.local.HeadlinesDBDao
+import com.assignment.newsbreeze.data.local.HeadlinesDB
+import com.assignment.newsbreeze.data.local.HeadlinesDBDao
 import com.assignment.newsbreeze.BuildConfig
 import com.assignment.newsbreeze.contract.*
+import com.assignment.newsbreeze.data.local.LocalDataService
 import com.assignment.newsbreeze.data.local.LocalDataSource
 import com.assignment.newsbreeze.data.network.NetworkDataSource
 import com.assignment.newsbreeze.data.network.NewsApi
@@ -15,18 +16,19 @@ import com.assignment.newsbreeze.usecase.HeadlineUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.android.components.ApplicationComponent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Singleton
 
 /**
  * Hilt Module class that builds our dependency graph
  */
-@InstallIn(ActivityComponent::class)
 @Module
+@InstallIn(ApplicationComponent::class)
 object NewsHiltDIModule {
 
     /**
@@ -84,6 +86,14 @@ object NewsHiltDIModule {
         RetrofitNewsWebService(retrofitClient)
 
     /**
+     * Returns a [ILocalService] impl
+     * @param headlinesDBDao [HeadlinesDBDao] retrofit interface
+     */
+    @Provides
+    fun providesLocalDataService(headlinesDBDao: HeadlinesDBDao): ILocalService =
+        LocalDataService(headlinesDBDao)
+
+    /**
      * Returns a [IRemoteDataSource] impl
      * @param webService [IWebService] instance
      */
@@ -100,15 +110,15 @@ object NewsHiltDIModule {
         LocalDataSource(localService)
 
     @Provides
-    fun provideHeadlinesDao(appDatabase: HeadlinesDB): HeadlinesDBDao {
-        return appDatabase.headlinesDao()
-    }
+    fun provideHeadlinesDao(appDatabase: HeadlinesDB): HeadlinesDBDao =
+        appDatabase.headlinesDao()
 
     @Provides
+    @Singleton
     fun provideHeadlinesDB(@ApplicationContext context: Context): HeadlinesDB =
         Room.databaseBuilder(
             context,
-            HeadlinesDB::class.java, "byjus-headlines.db"
+            HeadlinesDB::class.java, "news_breeze.db"
         ).build()
 
     /**
@@ -117,10 +127,9 @@ object NewsHiltDIModule {
      */
     @Provides
     fun provideRepository(
-        remoteDataSource: IRemoteDataSource/*, headlinesDBDao: HeadlinesDBDao*/
+        remoteDataSource: IRemoteDataSource, localDataSource: ILocalDataSource
     ): IRepository =
-        NewsRepository(remoteDataSource/*, headlinesDBDao*/)
-
+        NewsRepository(remoteDataSource, localDataSource)
 
     /**
      * Returns a [HeadlineUseCase] instance

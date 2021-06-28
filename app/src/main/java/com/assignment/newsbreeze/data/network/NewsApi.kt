@@ -11,7 +11,7 @@ import javax.inject.Singleton
 interface NewsApi {
     @GET("/v2/everything")
     suspend fun getHeadlines(
-        @Query("q") query: String = "technology",
+        @Query("q") query: String = "breaking news",
         @Query("from") fromDate: String = "2021-06-01",
         @Query("to") toDate: String = "2021-06-01",
         @Query("sortBy") sortBy: String = "popularity",

@@ -32,3 +32,5 @@ data class Source(
 		}
 	}
 }
+
+fun Source.transform(): DbSource = DbSource(id, name)

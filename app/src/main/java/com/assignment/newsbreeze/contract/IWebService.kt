@@ -12,11 +12,11 @@ import kotlinx.coroutines.flow.Flow
 interface IWebService {
 
     /**
-     * Performs the news API call. In an offline-first architecture, it is at this function
-     * call that the Repository class would check if the data exists in a Room
-     * table, if so return the data from the db, else perform a retrofit call to obtain and store the data
-     * into the db before returning the same
-     * @return [IOTaskResult] of [NewsHeadlinesResponse] type
+     * Performs the news API call. In an online-first architecture, it is at this function
+     * call that the Repository class would check if the data fetched from remote, if so return the
+     * data, else fetch local stored data into the db before returning the same
+     * @return [IOTaskResult] of [NewsHeadlinesResponse] if success,
+     *         [IOTaskResult] of [Throwable] on error
      */
     @ExperimentalCoroutinesApi
     suspend fun getHeadlines(): Flow<IOTaskResult<NewsHeadlinesResponse>>

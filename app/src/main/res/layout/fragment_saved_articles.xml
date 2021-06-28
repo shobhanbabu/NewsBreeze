@@ -6,41 +6,43 @@
     <data>
 
         <variable
-            name="article"
-            type="com.assignment.newsbreeze.data.models.Article" />
+            name="activity"
+            type="android.app.Activity" />
 
-        <variable
-            name="viewModel"
-            type="com.assignment.newsbreeze.viewmodel.NewsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@color/dark_white"
         android:layout_height="match_parent"
-        tools:context="com.assignment.newsbreeze.ui.fragment.NewsHeadlinesFragment">
-
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/news_breeze"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/left_guide"
-            app:layout_constraintTop_toTopOf="@+id/top_guide" />
+        android:background="@color/divider_white"
+        tools:context=".ui.fragment.SavedArticlesFragment">
 
         <ImageButton
-            android:id="@+id/saved_news"
+            android:id="@+id/back"
+            android:layout_width="@dimen/_42dp"
+            android:layout_height="@dimen/_42dp"
+            android:layout_marginLeft="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:background="@drawable/btn_transparent_bg"
+            android:onClick="@{()->activity.onBackPressed()}"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/light_black" />
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/HeadlineItemHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/light_green"
-            android:onClick="@{}"
-            android:padding="@dimen/_12dp"
-            android:src="@drawable/ic_saved"
-            app:layout_constraintBottom_toBottomOf="@+id/logo"
-            app:layout_constraintEnd_toStartOf="@+id/right_guide"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/logo" />
+            android:gravity="center"
+            android:text="@string/saved"
+            android:textColor="@color/light_green"
+            app:layout_constraintBottom_toBottomOf="@+id/back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/back" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@id/search_sort"
@@ -54,7 +56,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="@+id/left_guide"
-            app:layout_constraintTop_toBottomOf="@id/logo">
+            app:layout_constraintTop_toBottomOf="@+id/back">
 
             <ImageView
                 android:id="@+id/search_icon"
@@ -95,38 +97,49 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/headlinesList"
+        <TextView
+            android:id="@+id/date"
+            style="@style/SavedHeadlinesDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_16dp"
+            android:layout_marginTop="@dimen/_16dp"
+            android:text="Today"
+            app:layout_constraintLeft_toLeftOf="@id/search_sort"
+            app:layout_constraintTop_toBottomOf="@id/search_sort" />
+
+        <TextView
+            android:id="@+id/seeAll"
+            style="@style/SavedHeadlinesShowAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_transparent_bg"
+            android:text="@string/see_all"
+            app:layout_constraintBottom_toBottomOf="@+id/date"
+            app:layout_constraintRight_toRightOf="@id/search_sort"
+            app:layout_constraintTop_toTopOf="@+id/date" />
+
+        <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/_12dp"
-            android:scrollbars="vertical"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:background="@drawable/black_white_light_gradient"
+            app:cardCornerRadius="@dimen/_12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/right_guide"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="@+id/left_guide"
-            app:layout_constraintTop_toBottomOf="@+id/search_sort"
-            tools:listitem="@layout/headline_list_item_layout" />
+            app:layout_constraintTop_toBottomOf="@id/date">
 
-        <FrameLayout
-            android:id="@+id/loading"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:clickable="true"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/headlinesList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/_8dp"
+                android:scrollbars="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/saved_headline_list_item_layout" />
+        </androidx.cardview.widget.CardView>
 
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"/>
-        </FrameLayout>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/left_guide"
@@ -148,6 +161,5 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_end="@dimen/_16dp" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

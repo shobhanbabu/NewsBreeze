@@ -2,12 +2,9 @@ package com.assignment.newsbreeze.data.models
 
 import android.os.Parcel
 import android.os.Parcelable
-import androidx.room.Embedded
-import androidx.room.Entity
 
-@Entity
 data class Article(
-    @Embedded val source: Source?,
+    val source: Source?,
     val author: String?,
     val title: String?,
     val description: String?,
@@ -53,3 +50,15 @@ data class Article(
         }
     }
 }
+
+fun Article.transform(): DbArticle =
+    DbArticle(
+        source?.transform(),
+        author,
+        title!!,
+        description!!,
+        url,
+        urlToImage,
+        publishedAt,
+        content
+    )
